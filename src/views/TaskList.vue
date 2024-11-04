@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
     name: "TaskList",
     data() {
@@ -27,11 +29,13 @@ export default {
     },
     methods: {
         // Llamada para obtener las tareas desde la API externa
-        fetchTasks() {
-            // Aquí deberían realizar la solicitud a la API usando axios o fetch.
-            // La URL que usaremos es: https://dummyjson.com/todos
-
-            // Sugerencia: Intentar implementarlo con axios o fetch
+        async fetchTasks() {
+            try {
+                const response = await axios.get("https://dummyjson.com/todos");
+                this.tasks = response.data.todos; // Asignar la lista de tareas desde la respuesta
+            } catch (error) {
+                console.error("Error al obtener las tareas:", error);
+            }
         },
 
         // Cambiar el estado de una tarea (completada/no completada)
@@ -44,9 +48,50 @@ export default {
             this.tasks = this.tasks.filter((t) => t.id !== task.id);
         },
     },
+    // Llamada al método fetchTasks al crear el componente para obtener la lista inicial de tareas
+    created() {
+        this.fetchTasks();
+    },
 };
 </script>
 
+<script>import todoService from "@/services/todoService";
+
+export default {
+  data() {
+    return {
+      todos: []
+    };
+  },
+  async created() {
+    try {
+      const response = await todoService.getTodos();
+      this.todos = response.data;
+    } catch (error) {
+      console.error("Error fetching todos:", error);
+    }
+  }
+};</script>
 <style scoped>
 /* Aquí pueden experimentar con estilos de tu preferencia */
+.task-list-container {
+    max-width: 600px;
+    margin: auto;
+}
+.task-list {
+    margin-top: 1em;
+}
+.task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5em;
+    background-color: #f9f9f9;
+    margin-bottom: 0.5em;
+    border-radius: 4px;
+}
+.completed {
+    text-decoration: line-through;
+    color: gray;
+}
 </style>

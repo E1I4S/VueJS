@@ -2,6 +2,9 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import HomeView from '../views/HomeView.vue';
 import AddTask from '@/views/AddTask.vue';
+import AboutView from '../views/AboutView.vue';
+import CombinedView from '../views/CombinedView.vue';
+import TaskList from '@/views/TaskList.vue';
 // Importa los otros componentes en esta sección
 
 Vue.use(VueRouter);
@@ -26,7 +29,16 @@ const routes = [
     component: AddTask // Aquí se debe cargar el componente AddTask
     // Implementa la lógica para añadir nuevas tareas.
   },
-
+{
+  path:  '/combinedView',
+  name: 'CombinedView',
+  component: CombinedView
+},
+{
+path: '/taskList',
+name: 'TaskList',
+component:TaskList
+}
   // Las demás rutas deben ir aquí también
 ];
 
