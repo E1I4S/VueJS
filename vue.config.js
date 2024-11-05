@@ -4,4 +4,4 @@ module.exports = defineConfig({
   publicpath: process.env.NODE_ENV === 'production'
 ? '/VueJS/'
 : '/'
-})
+});
