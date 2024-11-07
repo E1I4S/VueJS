@@ -1,34 +1,28 @@
 <template>
     <!-- Contenedor principal del ítem de tarea -->
-    <div>
+    <div class="todo-item">
         <!-- Contenedor del título y el estado de la tarea -->
-        <div>
-            <!-- Muestra el título de la tarea y aplica un estilo tachado si la tarea está completada -->
-            <!-- Comentario: Cambia este estilo o agrega clases personalizadas -->
-            <h5 :style="{ textDecoration: completed ? 'line-through' : 'none' }">
+        <div class="todo-content">
+            <!-- Título de la tarea con estilo tachado si está completada -->
+            <h5 :class="{ 'completed': completed }">
                 {{ title }}
             </h5>
 
-            <!-- Muestra si la tarea está Completada o Pendiente -->
-            <!-- Comentario: Puedes cambiar este texto o agregar etiquetas visuales (por ejemplo, con colores o iconos) -->
-            <span>
+            <!-- Estado de la tarea (Completada o Pendiente) -->
+            <span class="todo-status">
                 {{ completed ? 'Completada' : 'Pendiente' }}
             </span>
         </div>
 
         <!-- Contenedor de botones de acción -->
-        <div>
-            <!-- Botón para marcar la tarea como completada o pendiente -->
-            <!-- Emite el evento 'toggle-completion' para indicar que se cambió el estado de la tarea -->
-            <!-- Comentario: Personaliza el texto, estilo o reemplaza con un ícono (ej. ✔ / ✘) -->
-            <button @click="$emit('toggle-completion')">
+        <div class="todo-actions">
+            <!-- Botón para cambiar el estado de la tarea -->
+            <button @click="$emit('toggle-completion')" class="btn-toggle">
                 Marcar como {{ completed ? 'Pendiente' : 'Completada' }}
             </button>
 
-            <!-- Botón para eliminar la tarea de la lista -->
-            <!-- Emite el evento 'delTodo' para indicar que se debe eliminar esta tarea -->
-            <!-- Comentario: Modifica el estilo, el texto, o reemplaza con un ícono como una papelera -->
-            <button @click="$emit('delTodo')">
+            <!-- Botón para eliminar la tarea -->
+            <button @click="$emit('delTodo')" class="btn-delete">
                 Eliminar
             </button>
         </div>
@@ -37,20 +31,82 @@
 
 <script>
 export default {
-    // Define el nombre del componente
     name: 'TodoItem',
-
-    // Define las propiedades que este componente recibirá del componente padre
-    // Comentario: Puedes agregar más propiedades si es necesario (por ejemplo, 'dueDate' para la fecha de vencimiento)
     props: {
-        title: String,      // Título de la tarea
-        completed: Boolean, // Estado de la tarea (completada o pendiente)
+        title: {
+            type: String,
+            required: true
+        },
+        completed: {
+            type: Boolean,
+            required: true
+        }
     }
 }
 </script>
 
 <style scoped>
-/* Puedes agregar tus propios estilos aquí */
-/* Por ejemplo, cambia el color de fondo de las tareas completadas */
+/* Estilos del componente TodoItem */
+.todo-item {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
 
+/* Contenedor del título y estado */
+.todo-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Estilo del título, se tacha si la tarea está completada */
+.completed {
+    text-decoration: line-through;
+    color: #777;
+}
+
+/* Estilo para el estado de la tarea */
+.todo-status {
+    font-weight: bold;
+    color: #555;
+}
+
+/* Contenedor de los botones de acción */
+.todo-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* Estilos de botones */
+.btn-toggle {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.btn-delete {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+/* Efectos hover para los botones */
+.btn-toggle:hover {
+    background-color: #45a049;
+}
+
+.btn-delete:hover {
+    background-color: #e53935;
+}
 </style>

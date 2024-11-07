@@ -16,20 +16,3 @@ export default {
   }
 }
 </script>
-<script>import todoService from "@/services/todoService";
-
-export default {
-  data() {
-    return {
-      todos: []
-    };
-  },
-  async created() {
-    try {
-      const response = await todoService.getTodos();
-      this.todos = response.data;
-    } catch (error) {
-      console.error("Error fetching todos:", error);
-    }
-  }
-};</script>
